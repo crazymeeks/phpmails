@@ -24,14 +24,14 @@ use Crazymeeks\Mailer\MailManager;
 $mailer = MailManager::initialize();  
 
 then send email by calling the to()->send()  
-send method required 2 parameters.  
+## send method requires 2 parameters.  
 ## Parameter 1.
 is the the path to your custom email  
 template file delimited by dot(.)  
 custom template file should be in .phtml extension  
 
 ## Parameter 2.
-array of data you need to pass in your view  
+This is the array of data you need to pass in your view  
 
 ## Example 1 without using custom template.  
 $mailer->to('receiver@example.com')->send(null, array('name' => $name, 'username' => 'test', 'password' => '1234'));
