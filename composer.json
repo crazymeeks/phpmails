@@ -1,0 +1,44 @@
+{
+	"name": "crazymeeks/phpmails",
+	"description": "Package for sending emails using sendgrid and gmail",
+	"license": "MIT",
+	"keywords": ["phpmailer", "mailer"],
+	"authors": [
+		{
+			"name": "Jeff Claud",
+			"email": "jeffclaud17@gmail.com"
+		}
+	],
+	"require": {
+		"vlucas/phpdotenv": "^2.4"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "4.0.*"
+	},
+	"autoload": {
+		"psr-4": {
+			"Crazymeeks\\Mailer\\": "src"
+		},
+		"files": ["helpers/files.php"]
+	},
+	"repositories": [
+		{
+			"type": "package",
+			"package": {
+				"name": "crazymeeks/phpmails",
+				"version": "dev-master",
+				"source": {
+					"url": "https://github.com/jepoyclaud/phpmails",
+					"type": "git",
+					"reference": "master"
+				},
+				"autoload": {
+					"psr-4": {
+						"Crazymeeks\\Mailer\\": "src"
+					}
+				}
+			}
+			
+		}
+	]
+}
