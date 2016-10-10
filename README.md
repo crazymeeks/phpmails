@@ -14,7 +14,7 @@ MAIL_SUBJECT="This subject must enclosed with double quote"
 
 ## Using environment.php
 ## After installation
-Find crazymeeks\phpmail\config\environment.php  
+Find vendor\crazymeeks\phpmail\config\environment.php  
 and add your mail service credentials
 
 ## Usage
