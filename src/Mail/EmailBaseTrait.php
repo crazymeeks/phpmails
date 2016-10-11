@@ -26,7 +26,7 @@ trait EmailBaseTrait{
 
 	protected $_from = null;
 
-	protected $_to = null;
+	protected $_to = array();
 
 	protected $_cc = null;
 
@@ -55,11 +55,16 @@ trait EmailBaseTrait{
 
 	/**
 	 * The email receptient
-	 * @param string $receptient
+	 * @param string $receptient       Receptient can also be in an array format
 	 * @return $this
 	 */
 	public function to($receptient){
-		$this->_to = $receptient;
+		if(!is_array($receptient)){
+			$this->_to = (array)$receptient;
+		}else{
+			$this->_to = $receptient;	
+		}
+		
 		return $this;
 	}
 
@@ -90,6 +95,7 @@ trait EmailBaseTrait{
 	 * @return mixed
 	 */
 	public function send($template = null, $vars){
+		
 		if(!is_array($vars)){
 			throw new PHPMailerExceptions('Invalid parameter. Second parameter should an array.');
 		}

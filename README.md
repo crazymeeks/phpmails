@@ -48,6 +48,13 @@ $mailer->to('receiver@example.com')->send(null, array('name' => $name, 'username
 ## Example 2 using custom template file
 $mailer->to('receiver@example.com')->send('views.email', array('name' => $name, 'username' => 'test', 'password' => '1234'));
 
+#Example 3.
+You can also pass an array of of emails in  
+to() method.  
+Example:  
+$emails = array('email1@example.com', 'email2@example.com');  
+$mailer->to($emails)->send('views.email', array('name' => $name, 'username' => 'test', 'password' => '1234'));
+
 ## Your email template(email.phtml)
 html  
 body  

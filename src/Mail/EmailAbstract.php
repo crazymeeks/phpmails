@@ -11,17 +11,33 @@ abstract class EmailAbstract{
 	 * @return mixed
 	 */
 	protected function doSendEmail(ExtendedMailerRepositoryInterface $mailer, $html){
+
 		try{
 			if($mailer instanceof $this){
-				
-				$data = array('api_user' => $mailer->_username,
+
+				if(count($this->_to) > 1){
+					$x_smtpapi = json_encode(array('category' => array('Send new email'), 'to' => $this->_to));
+
+					$data = array('api_user' => $mailer->_username,
 							  'api_key' => $mailer->_password,
-							  'to' => $mailer->_to,
+							  'to' => 'admin@localhost',
 							  //'toname' => 'Destination',
 							  'subject' => $mailer->_subject,
 							  'html' => $html,
-							  'from' => $mailer->_from
-				);
+							  'from' => $mailer->_from,
+							  'x-smtpapi' => $x_smtpapi
+					);
+
+				}else{
+					$data = array('api_user' => $mailer->_username,
+							  'api_key' => $mailer->_password,
+							  'to' => $this->_to[0],
+							  //'toname' => 'Destination',
+							  'subject' => $mailer->_subject,
+							  'html' => $html,
+							  'from' => $mailer->_from,
+					);
+				}
 
 				$ch = curl_init();
 
