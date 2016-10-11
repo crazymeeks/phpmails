@@ -3,7 +3,7 @@
 1. Install using composer  
 composer require crazymeeks/phpmails  
   
-If this command fails, copy this code in you composer.json  
+If this command fails, copy this code in 'autoload' of your composer.json  
 "crazymeeks/phpmails": "dev-master"  
 and execute composer update  
 
