@@ -43,10 +43,9 @@ abstract class EmailAbstract{
 				$response = curl_exec($ch);
 
 				curl_close($ch);
-				header('Content-Type: application/json');
-				echo json_encode($response);exit;
+				return true;
 			}
-			//return false;
+			return false;
 		}catch(PHPMailerExceptions $e){
 			throw new PHPMailerExceptions(__METHOD__ . ' parameter should be an instance of ExtendedMailerRepositoryInterface');
 		}
