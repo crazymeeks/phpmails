@@ -1,4 +1,12 @@
 ## PHP Mail
+## Installation
+1. Install using composer  
+composer require crazymeeks/phpmails  
+  
+If this command fails, copy this code in you composer.json  
+"crazymeeks/phpmails": "dev-master"  
+and execute composer update  
+
 ## Configuration
 
 ## Using dotenv(.env) file
@@ -40,10 +48,14 @@ $mailer->to('receiver@example.com')->send(null, array('name' => $name, 'username
 $mailer->to('receiver@example.com')->send('views.email', array('name' => $name, 'username' => 'test', 'password' => '1234'));
 
 ## Your email template(email.phtml)
-<html>
-<body>
+html  
+body  
 	Name: <?php echo $name;?>  
 	Username: <?php echo $username;?>  
 	Password: <?php echo $password;?>  
-</body>
-</html>
+body  
+html  
+
+
+## Author
+Jeff Claud[jeffclaud17@gmail.com]
