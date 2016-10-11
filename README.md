@@ -1,4 +1,5 @@
 ## PHP Mail
+Send email using Sendgrid
 ## Installation
 1. Install using composer  
 composer require crazymeeks/phpmails  
