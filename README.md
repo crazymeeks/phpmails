@@ -1,5 +1,7 @@
 ## PHP Mail
-Send email using Sendgrid
+Send email using Sendgrid. Gmail will also supported soon!  
+This library is still under heavy development, so expect the  
+changes soon :)
 ## Installation
 1. Install using composer  
 composer require crazymeeks/phpmails  
@@ -48,12 +50,8 @@ $mailer->to('receiver@example.com')->send(null, array('name' => $name, 'username
 ## Example 2 using custom template file
 $mailer->to('receiver@example.com')->send('views.email', array('name' => $name, 'username' => 'test', 'password' => '1234'));
 
-#Example 3.
-You can also pass an array of of emails in  
-to() method.  
-Example:  
-$emails = array('email1@example.com', 'email2@example.com');  
-$mailer->to($emails)->send('views.email', array('name' => $name, 'username' => 'test', 'password' => '1234'));
+#Note:  
+Passing an array in to() method will not work!
 
 ## Your email template(email.phtml)
 html  

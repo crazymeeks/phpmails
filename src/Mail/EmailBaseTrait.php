@@ -6,6 +6,7 @@
  * @package phpmailer
  */
 use Closure;
+use Crazymeeks\Mailer\Exceptions\PHPMailerExceptions;
 trait EmailBaseTrait{
 	use EmailMimeTrait;
 	/**
@@ -63,6 +64,10 @@ trait EmailBaseTrait{
 	 * @return $this
 	 */
 	public function to($receptient){
+		if(is_array($receptient)){
+			error_log("to() method receives data with type: " . gettype($receptient) . ", this has been removed. This method only accepts string");
+			throw new PHPMailerExceptions("to() method receives data with type: " . gettype($receptient) . ", this has been removed. This method only accepts string");
+		}
 		$this->_to = $receptient;
 		return $this;
 	}
