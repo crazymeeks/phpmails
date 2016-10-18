@@ -2,13 +2,15 @@
 
 require_once('./vendor/autoload.php');
 
-
 use Crazymeeks\Mailer\MailManager;
 
+// Initialized MailManager
 $mailer = MailManager::initialize();
 
 $name = 'John Doe';
-$email = array('email1@example.com', 'email2@example.com');
-$mailer->to($email)->send(null, array('name' => $name, 'username' => 'test', 'password' => '1234'));	
+$email = array('user1@gmail.com', 'user2@example.com');
 
-exit;
+// Send email one by one
+for($a = 0; $a < count($email); $a++){
+	$mailer->to($email[$a])->send(null, array('name' => $name, 'username' => 'test', 'password' => '1234'));	
+}

@@ -13,56 +13,51 @@ abstract class EmailAbstract{
 	protected function doSendEmail(ExtendedMailerRepositoryInterface $mailer, $html){
 
 		try{
+
 			if($mailer instanceof $this){
+				$params = array('personalizations' =>array( 
+										array('to' => array(
+											array('email' => $mailer->_to)),
+											'subject' => 'Test subject'
+										)),
+								'from' => array('email' => 'jeffclaud17@gmail.com'),
+								'content' => array(
+									array('type' => 'text/html', 'value' => $html)
+								)
+				);
+				$request_body = json_decode(json_encode($params));
 
-				if(count($this->_to) > 1){
-					$x_smtpapi = json_encode(array('category' => array('Send new email'), 'to' => $this->_to));
+				$url = (rtrim($mailer->_mailer_host, '/')) . '/' . ltrim($mailer->_endpoint, '/');
 
-					$data = array('api_user' => $mailer->_username,
-							  'api_key' => $mailer->_password,
-							  'to' => 'admin@localhost',
-							  //'toname' => 'Destination',
-							  'subject' => $mailer->_subject,
-							  'html' => $html,
-							  'from' => $mailer->_from,
-							  'x-smtpapi' => $x_smtpapi
-					);
+				$curl = curl_init($url);
 
-				}else{
-					$data = array('api_user' => $mailer->_username,
-							  'api_key' => $mailer->_password,
-							  'to' => $this->_to[0],
-							  //'toname' => 'Destination',
-							  'subject' => $mailer->_subject,
-							  'html' => $html,
-							  'from' => $mailer->_from,
-					);
-				}
+				$headers = array(
+	            'Authorization: Bearer ' . $mailer->_bearer,
+	            'User-Agent: sendgrid/' . $mailer->_version . ';php',
+	            'Accept: application/json'
+	            );
+				
+		        curl_setopt_array($curl, [
+		            CURLOPT_RETURNTRANSFER => true,
+		            CURLOPT_HEADER => 1,
+		            CURLOPT_CUSTOMREQUEST => strtoupper('post'),
+		            CURLOPT_SSL_VERIFYPEER => false,
+		        ]);
 
-				$ch = curl_init();
+		        $encodedBody = json_encode($request_body);
+		        curl_setopt($curl, CURLOPT_POSTFIELDS, $encodedBody);
+		            $headers = array_merge($headers, ['Content-Type: application/json']);
 
-				// // endpoint url
-				curl_setopt($ch, CURLOPT_URL, $mailer->_mailer_host);
+		        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
-				// set request as regular post
-				curl_setopt($ch, CURLOPT_POST, true);
+		        $response = curl_exec($curl);
 
-				// set data to be send
-				curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-
-				// set header
-				// curl_setopt($ch, CURLOPT_HTTPHEADER, array('Bearer: ' . $mailer->_bearer, 'application/json'));
-
-				// return transfer as string
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-				$response = curl_exec($ch);
-
-				curl_close($ch);
-				return true;
+		        curl_close($curl);
+				//return true;
 			}
-			return false;
+			//return false;
 		}catch(PHPMailerExceptions $e){
+			error_log(__METHOD__ . ' parameter should be an instance of ExtendedMailerRepositoryInterface');
 			throw new PHPMailerExceptions(__METHOD__ . ' parameter should be an instance of ExtendedMailerRepositoryInterface');
 		}
 		

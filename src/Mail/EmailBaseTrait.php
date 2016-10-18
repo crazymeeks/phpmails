@@ -26,7 +26,7 @@ trait EmailBaseTrait{
 
 	protected $_from = null;
 
-	protected $_to = array();
+	protected $_to = null;
 
 	protected $_cc = null;
 
@@ -34,13 +34,17 @@ trait EmailBaseTrait{
 
 	protected $_bearer = null;
 
+	protected $_version = '5.1.0';
+
 	protected $_mailer_host;
+
+	protected $_endpoint;
 
 	protected $_subject =  'New email';
 
 	protected $_username;
 
-	protected $_password;
+	protected $_password;	
 
 
 	/**
@@ -59,12 +63,7 @@ trait EmailBaseTrait{
 	 * @return $this
 	 */
 	public function to($receptient){
-		if(!is_array($receptient)){
-			$this->_to = (array)$receptient;
-		}else{
-			$this->_to = $receptient;	
-		}
-		
+		$this->_to = $receptient;
 		return $this;
 	}
 
@@ -95,33 +94,42 @@ trait EmailBaseTrait{
 	 * @return mixed
 	 */
 	public function send($template = null, $vars){
-		
-		if(!is_array($vars)){
-			throw new PHPMailerExceptions('Invalid parameter. Second parameter should an array.');
-		}
-		$doc_root = realpath($_SERVER['DOCUMENT_ROOT']);
-
-		if(is_array($vars)){
-			extract($vars);
-			if(is_null($template)){
-				ob_start();
-				require_once(realpath(__DIR__ . '/../Templates/view/email.phtml'));
-				$html = ob_get_contents();
-			}else{
-				$template_directory = explode(".", $template);
-				$template_file = implode("/", $template_directory) . '.phtml';
-				$directory = $doc_root . '/' . $template_file;
-
-				if(!file_exists($directory)){
-					throw new PHPMailerExceptions('Cannot find the template file');
-				}
-				ob_start();
-				require_once($directory);
-				$html = ob_get_contents();
+		try{
+			
+			if(!is_array($vars)){
+				error_log("Invalid parameter. Second parameter should an array.",0);
+				throw new PHPMailerExceptions('Invalid parameter. Second parameter should an array.');
 			}
-		}
 
-		$this->doSendEmail($this, $html);
+			$doc_root = realpath($_SERVER['DOCUMENT_ROOT']);
+			$html = '';
+			if(is_array($vars)){
+				extract($vars);
+				if(is_null($template)){
+					ob_start();
+					include realpath(__DIR__ . '/../Templates/view/email.phtml');
+					$html = ob_get_clean();
+				}else{
+					$template_directory = explode(".", $template);
+					$template_file = implode("/", $template_directory) . '.phtml';
+					$directory = $doc_root . '/' . $template_file;
+
+					if(!file_exists($directory)){
+						error_log("Cannot find the template file.", 0);
+						throw new PHPMailerExceptions('Cannot find the template file');
+					}
+					ob_start();
+					include $directory;
+					$html = ob_get_clean();
+				}
+			}
+			
+			$this->doSendEmail($this, $html);
+		}catch(PHPMailerExceptions $e){
+			error_log("Error: ", $e->getMessage());
+		}
+		
+		
 	}
 
 	/**
