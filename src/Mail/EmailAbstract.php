@@ -18,9 +18,9 @@ abstract class EmailAbstract{
 				$params = array('personalizations' =>array( 
 										array('to' => array(
 											array('email' => $mailer->_to)),
-											'subject' => 'Test subject'
+											'subject' => $mailer->_subject
 										)),
-								'from' => array('email' => 'jeffclaud17@gmail.com'),
+								'from' => array('email' => $mailer->_from),
 								'content' => array(
 									array('type' => 'text/html', 'value' => $html)
 								)
