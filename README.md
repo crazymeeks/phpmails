@@ -1,7 +1,12 @@
 ## PHP Mail
 Send email using Sendgrid. Gmail will also supported soon!  
 This library is still under heavy development, so expect the  
-changes soon :)
+changes soon :)  
+
+GMAIL is currently under heavy development. Thanks to  
+Jeffrey Mabazza!
+
+
 ## Installation
 1. Install using composer  
 composer require crazymeeks/phpmails  
@@ -65,3 +70,6 @@ html
 
 ## Author
 Jeff Claud[jeffclaud17@gmail.com]
+
+## Contributor
+Jeffrey Mabazza[jeffrey_mabazza@yahoo.com.ph]
