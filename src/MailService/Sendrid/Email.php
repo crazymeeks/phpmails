@@ -9,9 +9,11 @@
 use Crazymeeks\Mailer\Exceptions\PHPMailerExceptions;
 use Crazymeeks\Mailer\Mail\EmailAbstract;
 use Crazymeeks\Mailer\Mail\ExtendedMailerRepositoryInterface;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 class Email extends EmailAbstract implements ExtendedMailerRepositoryInterface{
 
-	public function __construct($configs = array()){
+	public function __construct($configs = array(), Logger $logger){
 		try{
 			if(!isset($configs['from'])){
 				error_log("Email sender not found");
@@ -33,9 +35,9 @@ class Email extends EmailAbstract implements ExtendedMailerRepositoryInterface{
 			}
 
 			$this->_from = $configs['from'];
-			$this->_to = (!isset($configs['to'])) ?: $configs['to']; //: null;
+			/*$this->_to = (!isset($configs['to'])) ?: $configs['to']; //: null;
 			$this->_cc = (isset($configs['cc'])) ? $configs['cc'] : null;
-			$this->_bcc = (isset($configs['bcc'])) ? $configs['bcc'] : null;
+			$this->_bcc = (isset($configs['bcc'])) ? $configs['bcc'] : null;*/
 			$this->_bearer = $configs['bearer'];
 
 			/**
@@ -52,6 +54,9 @@ class Email extends EmailAbstract implements ExtendedMailerRepositoryInterface{
 			$this->_username = $configs['username'];
 			$this->_password = $configs['password'];
 
+			$this->logger = $logger;
+			$this->logger->pushHandler(new StreamHandler(__DIR__ . '/../../../storage/logs/sendgrid.log', Logger::WARNING));
+			$this->email_instance = $this;
 		}catch(PHPMailerExceptions $e){
 			error_log('Can\'t proceed. ' . $e->getMessage());
 			throw new PHPMailerExceptions('Can\'t proceed. ' . $e->getMessage());

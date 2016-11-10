@@ -5,7 +5,7 @@
  * @author Jeff Claud<jefferson.claud@nuworks.ph>
  * @since 2016
  */
-
+use Monolog\Logger;
 class MailManager{
 
 	/**
@@ -61,9 +61,11 @@ class MailManager{
 			);
 			$email = ucfirst(strtolower($environment['mailer']));
 		}
-		
+
+		$logger = new Logger('sendgrid');
+
 		$class = __NAMESPACE__ . '\MailService\\' . $email . '\\Email';
-		return self::$instance = new $class(self::$configs);
+		return self::$instance = new $class(self::$configs, $logger);
 	}	
 
 }

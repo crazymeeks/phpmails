@@ -11,9 +11,7 @@ abstract class EmailAbstract{
 	 * @return mixed
 	 */
 	protected function doSendEmail(ExtendedMailerRepositoryInterface $mailer, $html){
-
 		try{
-
 			if($mailer instanceof $this){
 				$params = array('personalizations' =>array( 
 										array('to' => array(
@@ -60,8 +58,12 @@ abstract class EmailAbstract{
 			error_log(__METHOD__ . ' parameter should be an instance of ExtendedMailerRepositoryInterface');
 			throw new PHPMailerExceptions(__METHOD__ . ' parameter should be an instance of ExtendedMailerRepositoryInterface');
 		}
-		
-		
-		
+	}
+
+	/**
+	 * Send email
+	 */
+	public function mailsend(){
+		$this->doSendEmail($this->email_instance, $this->html);
 	}
 }
