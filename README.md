@@ -4,7 +4,7 @@ This library is still under heavy development, so expect the
 changes soon :)
 
 ## What's new?  
-1. You can now add cc and bcc when send an email.  
+1. You can now add cc and bcc when sending an email.  
 
 ## Change log  
 1. Sending email using $mailer->to('receiver@example.com')->send(null, array('name' => $name, 'username' => 'test', 'password' => '1234')); already deprecated and will completely remove in version 1.1.  
