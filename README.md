@@ -56,9 +56,8 @@ $mailer->prepare('your.template.email', $data = ['name' => 'John'], function($ma
 
 #Note:  
 Example 1 & 2 is already deprecated and will be removed in version 1.1. Please use the recommended usage
-
-then send email by calling the to()->send()  
-## send method requires 2 parameters.  
+ 
+## Send method requires 2 parameters.  
 ## Parameter 1.
 is the the path to your custom email  
 template file delimited by dot(.)  
@@ -66,8 +65,6 @@ custom template file should be in .phtml extension
 
 ## Parameter 2.
 This is the array of data you need to pass in your view  
-
-
 
 ## Example 1 without using custom template(deprecated)
 $mailer->to('receiver@example.com')->send(null, array('name' => $name, 'username' => 'test', 'password' => '1234'));
