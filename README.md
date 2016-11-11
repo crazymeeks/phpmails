@@ -1,5 +1,5 @@
 ## PHP Mail
-Send email using Sendgrid. Gmail will also supported soon!  
+Send email using Sendgrid. Gmail will be supported soon!  
 This library is still under heavy development, so expect the  
 changes soon :)
 
