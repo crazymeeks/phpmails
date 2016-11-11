@@ -1,11 +1,16 @@
 ## PHP Mail
 Send email using Sendgrid. Gmail will also supported soon!  
 This library is still under heavy development, so expect the  
-changes soon :)  
+changes soon :)
 
-GMAIL is currently under heavy development. Thanks to  
-Jeffrey Mabazza!
+## What's new?  
+1. You can now add cc and bcc when send an email.  
 
+## Change log  
+1. Sending email using $mailer->to('receiver@example.com')->send(null, array('name' => $name, 'username' => 'test', 'password' => '1234')); already deprecated and will completely remove in version 1.1.  
+
+## Requirements
+PHP 5.3 or > 
 
 ## Installation
 1. Install using composer  
@@ -39,6 +44,19 @@ Put this code in your php file
 use Crazymeeks\Mailer\MailManager;  
 $mailer = MailManager::initialize();  
 
+
+## Recommended Usage
+$mailer->prepare('your.template.email', $data = ['name' => 'John'], function($mail){  
+ 	$mail->to('user1@gmail.com')  
+ 		 ->cc('user1@gmail.com', 'user2@gmail.com')  
+ 		 ->bcc('user3@gmail.com', 'user4@gmail.com')  
+ 		 ->subject('Test email');  
+ })->mailsend();
+
+
+#Note:  
+Example 1 & 2 is already deprecated and will be removed in version 1.1. Please use the recommended usage
+
 then send email by calling the to()->send()  
 ## send method requires 2 parameters.  
 ## Parameter 1.
@@ -49,14 +67,15 @@ custom template file should be in .phtml extension
 ## Parameter 2.
 This is the array of data you need to pass in your view  
 
-## Example 1 without using custom template.  
+
+
+## Example 1 without using custom template(deprecated)
 $mailer->to('receiver@example.com')->send(null, array('name' => $name, 'username' => 'test', 'password' => '1234'));
 
-## Example 2 using custom template file
+## Example 2 using custom template file(deprecated)
 $mailer->to('receiver@example.com')->send('views.email', array('name' => $name, 'username' => 'test', 'password' => '1234'));
 
-#Note:  
-Passing an array in to() method will not work!
+
 
 ## Your email template(email.phtml)
 html  
@@ -67,6 +86,10 @@ body
 body  
 html  
 
+You can also have a quick look at index.php file
+
+## Report Bug
+Email: jeffclaud17@gmail.com
 
 ## Author
 Jeff Claud[jeffclaud17@gmail.com]

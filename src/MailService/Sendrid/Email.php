@@ -50,7 +50,7 @@ class Email extends EmailAbstract implements ExtendedMailerRepositoryInterface{
 			 */
 			$this->_endpoint = 'v3/mail/send';
 
-			$this->_subject = (isset($configs['subject']) && !empty($configs['subject'])) ? $configs['subject'] : $configs['subject'];
+			$this->subject = (isset($configs['subject']) && !empty($configs['subject'])) ? $configs['subject'] : $configs['subject'];
 			$this->_username = $configs['username'];
 			$this->_password = $configs['password'];
 

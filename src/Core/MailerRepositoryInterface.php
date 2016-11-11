@@ -23,17 +23,16 @@ interface MailerRepositoryInterface{
 
 	/**
 	 * The email receptient as carbon copy
-	 * @param array $receptients
-	 * @return static
+	 *
+	 * @return $this
 	 */
-	public function cc(array $receptients);
+	public function cc();
 
 	/**
 	 * The email receptient as blind carbon copy
-	 * @param array $receptients
-	 * @return static
+	 * @return $this
 	 */
-	public function bcc(array $receptients);
+	public function bcc();
 
 	/**
 	 * The email receptient

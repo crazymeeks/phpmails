@@ -13,16 +13,25 @@ abstract class EmailAbstract{
 	protected function doSendEmail(ExtendedMailerRepositoryInterface $mailer, $html){
 		try{
 			if($mailer instanceof $this){
-				$params = array('personalizations' =>array( 
-										array('to' => array(
-											array('email' => $mailer->_to)),
-											'subject' => $mailer->_subject
+
+				$params = array('personalizations' => array( 
+										array('to' => array(array('email' => $mailer->_to)),
+											  'cc' => $mailer->getCC(),
+											  'bcc' => $mailer->getBcc(),
+											  'subject' => $mailer->subject
 										)),
+
 								'from' => array('email' => $mailer->_from),
 								'content' => array(
 									array('type' => 'text/html', 'value' => $html)
 								)
 				);
+				if(is_null($params['personalizations'][0]['cc']))
+					unset($params['personalizations'][0]['cc']);
+
+				if(is_null($params['personalizations'][0]['bcc']))
+					unset($params['personalizations'][0]['bcc']);
+
 				$request_body = json_decode(json_encode($params));
 
 				$url = (rtrim($mailer->_mailer_host, '/')) . '/' . ltrim($mailer->_endpoint, '/');

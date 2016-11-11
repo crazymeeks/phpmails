@@ -1,4 +1,5 @@
 <?php namespace Crazymeeks\Mailer\Mail;
+
 /**
  * Base Trait for all Email classes
  * @author Jeff Claud<jefferson.claud@nuworks.ph>
@@ -71,7 +72,7 @@ trait EmailBaseTrait{
 
 	protected $_endpoint;
 
-	protected $_subject =  'New email';
+	protected $subject =  'New email';
 
 	protected $_username;
 
@@ -95,7 +96,7 @@ trait EmailBaseTrait{
 	 */
 	public function to($receptient){
 		if(is_array($receptient)){
-			error_log("to() method receives data with type: " . gettype($receptient) . ", this has been removed. This method only accepts string");
+			$this->logger->error("to() method receives data with type: " . gettype($receptient) . ", this has been removed. This method only accepts string");
 			throw new PHPMailerExceptions("to() method receives data with type: " . gettype($receptient) . ", this has been removed. This method only accepts string");
 		}
 		
@@ -105,12 +106,28 @@ trait EmailBaseTrait{
 
 	/**
 	 * The email receptient as carbon copy
-	 * @param array $receptients
+	 *
 	 * @return $this
 	 */
-	public function cc(array $receptients){
-		$this->_cc = $receptients;
+	public function cc(){
+		$args = func_get_args();
+		$cc = array();
+		foreach($args as $arg){
+			$cc[] = array('email' => $arg);
+		}
+
+		$this->_cc = $cc;
+
 		return $this;
+	}
+
+	/**
+	 * Get the cc emails
+	 *
+	 * @return array
+	 */
+	public function getCC(){
+		return $this->_cc;
 	}
 
 	/**
@@ -118,9 +135,25 @@ trait EmailBaseTrait{
 	 * @param array $receptients
 	 * @return $this
 	 */
-	public function bcc(array $receptients){
-		$this->_bcc = $receptients;
+	public function bcc(){
+		$args = func_get_args();
+		$bcc = array();
+		foreach($args as $arg){
+			$bcc[] = array('email' => $arg);
+		}
+
+		$this->_bcc = $bcc;
+
 		return $this;
+	}
+
+	/**
+	 * Get the Bcc emails
+	 *
+	 * @return array
+	 */
+	public function getBcc(){
+		return $this->_bcc;
 	}
 
 	/**
@@ -128,47 +161,18 @@ trait EmailBaseTrait{
 	 * @param string $template
 	 * @param $vars   The variable to be pass to the view
 	 * @return mixed
+	 * @deprecated send() method will be deprecated in version 1.1. Please use prepare() instead
 	 */
 	public function send($template = null, $vars){
 		try{
-			
-			/*if(!is_array($vars)){
-				error_log("Invalid parameter. Second parameter should an array.",0);
-				throw new PHPMailerExceptions('Invalid parameter. Second parameter should an array.');
-			}
-
-			$doc_root = realpath($_SERVER['DOCUMENT_ROOT']);
-			$html = '';
-			if(is_array($vars)){
-				extract($vars);
-				if(is_null($template)){
-					ob_start();
-					include realpath(__DIR__ . '/../Templates/view/email.phtml');
-					$html = ob_get_clean();
-				}else{
-					$template_directory = explode(".", $template);
-					$template_file = implode("/", $template_directory) . '.phtml';
-					$directory = $doc_root . '/' . $template_file;
-
-					if(!file_exists($directory)){
-						error_log("Cannot find the template file.", 0);
-						throw new PHPMailerExceptions('Cannot find the template file');
-					}
-					ob_start();
-					include $directory;
-					$html = ob_get_clean();
-				}
-			}
-			*/
+			$this->logger->error("send() method will be deprecated in version 1.1. Please use prepare() instead");
+			trigger_error("send() method will be deprecated in version 1.1. Please use prepare() instead", E_USER_NOTICE);
 
 			$this->setViewData($vars);
 			$data = $this->getViewData();
 
-			$this->prepare($template, $data);
-
-			//trigger_error("send() method will be deprecated in version 1.1. Please use prepare() instead");
+			$this->prepare($template, $data)->mailsend();
 			
-			//$this->doSendEmail($this, $html);
 		}catch(PHPMailerExceptions $e){
 			error_log("Error: ", $e->getMessage());
 		}
@@ -184,35 +188,6 @@ trait EmailBaseTrait{
 	public function prepare($template = null, array $data = array(), $callback = null){
 		
 		try{
-			/*if(!empty($template)){
-				if(!is_array($vars)){
-					error_log("Invalid parameter. Second parameter should an array.",0);
-					throw new PHPMailerExceptions('Invalid parameter. Second parameter should an array.');
-				}
-
-				$doc_root = realpath($_SERVER['DOCUMENT_ROOT']);
-				$html = '';
-				if(is_array($vars)){
-					extract($vars);
-					if(is_null($template)){
-						ob_start();
-						include realpath(__DIR__ . '/../Templates/view/email.phtml');
-						$html = ob_get_clean();
-					}else{
-						$template_directory = explode(".", $template);
-						$template_file = implode("/", $template_directory) . '.phtml';
-						$directory = $doc_root . '/' . $template_file;
-
-						if(!file_exists($directory)){
-							error_log("Cannot find the template file.", 0);
-							throw new PHPMailerExceptions('Cannot find the template file');
-						}
-						ob_start();
-						include $directory;
-						$html = ob_get_clean();
-					}
-				}	
-			}*/
 
 			// set the template
 			$this->setTemplate($template);
@@ -239,6 +214,20 @@ trait EmailBaseTrait{
 		}catch(PHPMailerExceptions $e){
 			$this->logger->error('Error: ' . $e->getMessage());
 		}
+	}
+
+	/**
+	 * Set the email subject
+	 * 
+	 * @param string $subject
+	 * @return $this
+	 */
+	public function subject($subject){
+		$this->subject = $subject;
+		return $this;
+	}
+	public function getSubject(){
+		return $this->subject;
 	}
 
 	/**
