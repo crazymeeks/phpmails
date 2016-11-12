@@ -6,6 +6,7 @@
  * @since 2016
  */
 use Monolog\Logger;
+use Crazymeeks\Mailer\Factories\EmailFactory;
 class MailManager{
 
 	/**
@@ -64,8 +65,10 @@ class MailManager{
 
 		$logger = new Logger('sendgrid');
 
-		$class = __NAMESPACE__ . '\MailService\\' . $email . '\\Email';
-		return self::$instance = new $class(self::$configs, $logger);
+		$class = EmailFactory::make(__NAMESPACE__ . '\MailService\\' . $email . '\\Email', self::$configs, $logger);
+		return $class;
+		//return self::$instance = new $class(self::$configs, $logger);
+
 	}	
 
 }
