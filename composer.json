@@ -1,8 +1,8 @@
 {
 	"name": "crazymeeks/phpmails",
-	"description": "Package for sending emails using sendgrid and gmail",
+	"description": "This library will help you send emails with SendGrid",
 	"license": "MIT",
-	"keywords": ["phpmailer", "mailer"],
+	"keywords": ["sendgrid", "email", "send", "grid", "PHP mailer", "SendGrid", "php mail library"],
 	"authors": [
 		{
 			"name": "Jeff Claud",
