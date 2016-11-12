@@ -32,9 +32,6 @@ abstract class EmailAbstract{
 				if(is_null($params['personalizations'][0]['bcc']))
 					unset($params['personalizations'][0]['bcc']);
 
-				// header("Content-Type: application/json");
-				// echo json_encode($params);exit;
-
 				$request_body = json_decode(json_encode($params));
 
 				$url = (rtrim($mailer->getMailerServiceHost(), '/')) . '/' . ltrim($mailer->getEmailEndpoint(), '/');

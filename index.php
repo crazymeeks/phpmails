@@ -33,7 +33,3 @@ $mailer = MailManager::initialize();
  		 ->subject('Test email');
  })->mailsend();
  */
- $mailer->prepare(null, $data = ['name' => 'John'], function($mail){
- 	$mail->to('jeffersonclaud23@gmail.com')
- 		 ->subject('Test if working');
- })->mailsend();

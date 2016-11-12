@@ -34,20 +34,19 @@ class Email extends EmailAbstract implements ExtendedMailerRepositoryInterface{
 				throw new PHPMailerExceptions('Please provide sendgrid password');
 			}
 
-			$this->_from = $configs['from'];
+			// set the email sender
+			$this->from($configs['from']);
 		
 			$this->setBearer($configs['bearer']);
 			
 			// set provider version
 			$this->setProviderVersion('5.1.0');
-			//$this->_bearer = $configs['bearer'];
 
 			/**
 		 	 * @todo Future improvement - _mailer_host should be definable in configuration file
 			 */
 			$this->setMailerServiceHost('https://api.sendgrid.com/');
-			//$this->_mailer_host = 'https://api.sendgrid.com/';
-
+			
 			/**
 		 	 * @todo Future improvement - _endpoint should be definable in configuration file
 			 */
