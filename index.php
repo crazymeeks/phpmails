@@ -33,9 +33,3 @@ $mailer = MailManager::initialize();
  		 ->subject('Test email');
  })->mailsend();
  */
- $mailer->prepare(null, $data = ['name' => 'John'], function($mail){
- 	$mail->to('jeffersonclaud23@gmail.com')
- 		 //->cc('user1@gmail.com', 'user2@gmail.com')
- 		 //->bcc('user3@gmail.com', 'user4@gmail.com')
- 		 ->subject('Test email');
- })->mailsend();
