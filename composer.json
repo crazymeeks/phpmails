@@ -18,7 +18,8 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Crazymeeks\\Mailer\\": "src"
+			"Crazymeeks\\Mailer\\": "src",
+			"Tests\\": "tests"
 		},
 		"files": ["helpers/files.php"]
 	},
