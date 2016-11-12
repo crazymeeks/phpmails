@@ -90,6 +90,15 @@ trait EmailBaseTrait{
 	}
 
 	/**
+	 * Get the sender's email
+	 *
+	 * @return string
+	 */
+	public function getFrom(){
+		return $this->_from;
+	}
+
+	/**
 	 * The email receptient
 	 * @param string $receptient       Receptient can also be in an array format
 	 * @return $this
@@ -102,6 +111,15 @@ trait EmailBaseTrait{
 		
 		$this->_to = $receptient;
 		return $this;
+	}
+
+	/**
+	 * Get the receiver's email address
+	 *
+	 * @return string
+	 */
+	public function getTo(){
+		return $this->_to;
 	}
 
 	/**
@@ -154,6 +172,76 @@ trait EmailBaseTrait{
 	 */
 	public function getBcc(){
 		return $this->_bcc;
+	}
+
+	/**
+	 * Set email service endpoint
+	 * 
+	 * @param string $endpoint
+	 * @return $this
+	 */
+	public function setEmailEndpoint($endpoint){
+		$this->_endpoint = $endpoint;
+		return $this;
+	}
+
+	/**
+	 * Get the email service endpoint
+	 *
+	 * @return string
+	 */
+	public function getEmailEndpoint(){
+		return $this->_endpoint;
+	}
+
+	/**
+	 * Set the mail service api url
+	 *
+	 * @param string $url
+	 * @return $this
+	 */
+	public function setMailerServiceHost($url){
+		$this->_mailer_host = $url;
+		return $this;
+	}
+
+	public function getMailerServiceHost(){
+		return $this->_mailer_host;
+	}
+
+	/**
+	 * Set the mail bearer. This is the api key
+	 *
+	 * @param string $bearer
+	 * @return $this
+	 */
+	public function setBearer($bearer){
+		$this->_bearer = $bearer;
+		return $this;
+	}
+
+	/**
+	 * Get the mail bearer/api key
+	 *
+	 * @return string
+	 */
+	public function getBearer(){
+		return $this->_bearer;
+	}
+
+	/**
+	 * Set the version of the mail provider
+	 *
+	 * @param string $version
+	 * @return $this
+	 */
+	public function setProviderVersion($version){
+		$this->_version = $version;
+		return $this;
+	}
+
+	public function getProviderVersion(){
+		return $this->_version;
 	}
 
 	/**

@@ -15,13 +15,13 @@ abstract class EmailAbstract{
 			if($mailer instanceof $this){
 
 				$params = array('personalizations' => array( 
-										array('to' => array(array('email' => $mailer->_to)),
+										array('to' => array(array('email' => $mailer->getTo())),
 											  'cc' => $mailer->getCC(),
 											  'bcc' => $mailer->getBcc(),
-											  'subject' => $mailer->subject
+											  'subject' => $mailer->getSubject()
 										)),
 
-								'from' => array('email' => $mailer->_from),
+								'from' => array('email' => $mailer->getFrom()),
 								'content' => array(
 									array('type' => 'text/html', 'value' => $html)
 								)
@@ -32,15 +32,18 @@ abstract class EmailAbstract{
 				if(is_null($params['personalizations'][0]['bcc']))
 					unset($params['personalizations'][0]['bcc']);
 
+				// header("Content-Type: application/json");
+				// echo json_encode($params);exit;
+
 				$request_body = json_decode(json_encode($params));
 
-				$url = (rtrim($mailer->_mailer_host, '/')) . '/' . ltrim($mailer->_endpoint, '/');
+				$url = (rtrim($mailer->getMailerServiceHost(), '/')) . '/' . ltrim($mailer->getEmailEndpoint(), '/');
 
 				$curl = curl_init($url);
 
 				$headers = array(
-	            'Authorization: Bearer ' . $mailer->_bearer,
-	            'User-Agent: sendgrid/' . $mailer->_version . ';php',
+	            'Authorization: Bearer ' . $mailer->getBearer(),
+	            'User-Agent: sendgrid/' . $mailer->getProviderVersion() . ';php',
 	            'Accept: application/json'
 	            );
 				
