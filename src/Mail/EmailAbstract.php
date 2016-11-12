@@ -1,4 +1,13 @@
 <?php namespace Crazymeeks\Mailer\Mail;
+/**
+ * Abstract Class for all email providers
+ * All email classes should extend this class
+ *
+ * @author Jeff Claud<jeffclaud17@gmail.com>
+ * @license MIT
+ * @copyright 2016
+ */
+
 
 use Crazymeeks\Mailer\Mail\EmailBaseTrait;
 use Crazymeeks\Mailer\Exceptions\PHPMailerExceptions;
