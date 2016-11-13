@@ -328,6 +328,7 @@ trait EmailBaseTrait{
 		if(is_null($template)){
 			$this->template = realpath(__DIR__ . '/../Templates/view/email.phtml');
 		}else{
+			$doc_root = realpath($_SERVER['DOCUMENT_ROOT']);
 			$template_directory = explode(".", $template);
 			$template_file = implode("/", $template_directory) . '.phtml';
 			$directory = $doc_root . '/' . $template_file;
@@ -344,7 +345,7 @@ trait EmailBaseTrait{
 	 * Get the view template
 	 * @return
 	 */
-	protected function getTemplate(){
+	public function getTemplate(){
 		return $this->template;
 	}
 
