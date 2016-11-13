@@ -332,11 +332,11 @@ trait EmailBaseTrait{
 			$template_directory = explode(".", $template);
 			$template_file = implode("/", $template_directory) . '.phtml';
 			$directory = $doc_root . '/' . $template_file;
-
-			if(!file_exists($directory))
+			
+			if(!file_exists($directory)){
 				$this->logger->error("Cannot find the template file.");
 				throw new PHPMailerExceptions("Cannot find the template file.");
-		
+			}
 			$this->template = $directory;	
 		}
 	}
