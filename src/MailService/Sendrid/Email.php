@@ -86,6 +86,7 @@ class Email extends EmailAbstract implements ExtendedMailerRepositoryInterface{
 										)),
 
 								'from' => array('email' => $mailer->getFrom()),
+								'categories' => $mailer->getCategory(),
 								'content' => array(
 									array('type' => 'text/html', 'value' => $html)
 								)
@@ -95,7 +96,9 @@ class Email extends EmailAbstract implements ExtendedMailerRepositoryInterface{
 
 				if(is_null($params['personalizations'][0]['bcc']))
 					unset($params['personalizations'][0]['bcc']);
-
+				if(empty($params['categories']))
+					unset($params['categories']);
+				
 				$request_body = json_decode(json_encode($params));
 
 				$url = (rtrim($mailer->getMailerServiceHost(), '/')) . '/' . ltrim($mailer->getEmailEndpoint(), '/');

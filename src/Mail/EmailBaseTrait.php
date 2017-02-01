@@ -76,7 +76,14 @@ trait EmailBaseTrait{
 
 	protected $_username;
 
-	protected $_password;	
+	protected $_password;
+
+	/**
+	 * The email category. This can be see
+	 * in the sendgrid dashboard
+	 * @var array
+	 */
+	protected $category = array();
 
 
 	/**
@@ -192,6 +199,22 @@ trait EmailBaseTrait{
 	 */
 	public function getEmailEndpoint(){
 		return $this->_endpoint;
+	}
+
+	/**
+	 * Get the email category
+	 *
+	 * @return array
+	 */
+	public function category($categories){
+		if(!is_array($categories) && empty($categories)){
+			throw new PHPMailerExceptions('Invalid category. Array expected, ' . gettype($categories) . ' given.');
+		}
+		$this->category = $categories;
+	}
+
+	public function getCategory(){
+		return $this->category;
 	}
 
 	/**
