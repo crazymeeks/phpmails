@@ -50,6 +50,7 @@ $mailer->prepare('your.template.email', $data = ['name' => 'John'], function($ma
  	$mail->to('user1@gmail.com')  
  		 ->cc('user1@gmail.com', 'user2@gmail.com')  
  		 ->bcc('user3@gmail.com', 'user4@gmail.com')  
+ 		 ->category(array('My SendGrid mail category'))  
  		 ->subject('Test email');  
  })->mailsend();
 
