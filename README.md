@@ -14,7 +14,7 @@ PHP 5.3 or >
 
 ## Installation
 1. Install using composer  
-composer require crazymeeks/phpmails  
+composer require crazymeeks/phpmails  dev-master
   
 If this command fails, copy this code in 'autoload' of your composer.json  
 "crazymeeks/phpmails": "dev-master"  
