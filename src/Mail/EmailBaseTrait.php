@@ -58,6 +58,8 @@ trait EmailBaseTrait{
 
 	protected $_from = null;
 
+	protected $_fromName = null;
+
 	protected $_to = null;
 
 	protected $_cc = null;
@@ -103,6 +105,25 @@ trait EmailBaseTrait{
 	 */
 	public function getFrom(){
 		return $this->_from;
+	}
+
+	/**
+	 * The email sender
+	 * @param string $receptient
+	 * @return $this
+	 */
+	public function fromName($sender){
+		$this->_fromName = $sender;
+		return $this;
+	}
+
+	/**
+	 * Get the sender's email
+	 *
+	 * @return string
+	 */
+	public function getFromName(){
+		return $this->_fromName;
 	}
 
 	/**

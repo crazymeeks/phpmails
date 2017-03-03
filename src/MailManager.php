@@ -34,7 +34,7 @@ class MailManager{
 	 */
 	public static function initialize(){
 		$email = '';
-		$doc = realpath($_SERVER['DOCUMENT_ROOT']);
+		$doc = realpath($_SERVER['DOCUMENT_ROOT']."/phpmails");
 		if(hasFile(".env", $doc)){
 			self::$env = new \Dotenv\Dotenv($doc);
 			self::$env->load();
@@ -44,6 +44,7 @@ class MailManager{
 				'mail_port' => getenv('MAIL_PORT'),
 				'bearer' => getenv('MAIL_API_KEY'),
 				'from' => getenv('MAIL_FROM'),
+				'fromName' => getenv('MAIL_FROM_NAME') ? getenv('MAIL_FROM_NAME') : getenv('MAIL_FROM') ,
 				'username' => getenv('USERNAME'),
 				'password' => getenv('PASSWORD'),
 				'subject' => getenv('MAIL_SUBJECT'),
@@ -56,6 +57,7 @@ class MailManager{
 				'mail_protocol' => $environment['mail_protocol'],
 				'bearer' => $environment['bearer'],
 				'from' => $environment['from'],
+				'fromName' => $environment['fromName'] ? $environment['fromName'] : $environment['from'],
 				'username' => $environment['username'],
 				'password' => $environment['password'],
 				'subject' => $environment['subject'],

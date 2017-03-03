@@ -36,6 +36,9 @@ class Email extends EmailAbstract implements ExtendedMailerRepositoryInterface{
 
 			// set the email sender
 			$this->from($configs['from']);
+
+			// set the email sender
+			$this->fromName($configs['fromName']);
 		
 			$this->setBearer($configs['bearer']);
 			
@@ -85,7 +88,7 @@ class Email extends EmailAbstract implements ExtendedMailerRepositoryInterface{
 											  'subject' => $mailer->getSubject()
 										)),
 
-								'from' => array('email' => $mailer->getFrom()),
+								'from' => array('email' => $mailer->getFrom(),'name' => $mailer->getFromName()),
 								'categories' => $mailer->getCategory(),
 								'content' => array(
 									array('type' => 'text/html', 'value' => $html)
