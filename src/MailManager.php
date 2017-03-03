@@ -34,7 +34,7 @@ class MailManager{
 	 */
 	public static function initialize(){
 		$email = '';
-		$doc = realpath($_SERVER['DOCUMENT_ROOT']."/phpmails");
+		$doc = realpath($_SERVER['DOCUMENT_ROOT']);
 		if(hasFile(".env", $doc)){
 			self::$env = new \Dotenv\Dotenv($doc);
 			self::$env->load();
