@@ -24,16 +24,6 @@ class Email extends EmailAbstract implements ExtendedMailerRepositoryInterface{
 				throw new PHPMailerExceptions('Please sendgrid api key not found');
 			}
 
-			if(!isset($configs['username'])){
-				error_log("Sendgrid username not found. Please provide your sendgrid username.");
-				throw new PHPMailerExceptions('Please provide sendgrid username');
-			}
-
-			if(!isset($configs['password'])){
-				error_log("Sendgrid password not found. Please provide your sendgrid password.");
-				throw new PHPMailerExceptions('Please provide sendgrid password');
-			}
-
 			// set the email sender
 			$this->from($configs['from']);
 
@@ -128,7 +118,7 @@ class Email extends EmailAbstract implements ExtendedMailerRepositoryInterface{
 		        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
 		        $response = curl_exec($curl);
-
+				print_r($response);exit;
 		        curl_close($curl);
 				//return true;
 			}
